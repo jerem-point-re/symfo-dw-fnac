@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Musique index{% endblock %}
+
+{% block body %}
+<h1>Musique index</h1>
+
+{% for musique in musiques %}
+{% if app.user %}
+
+<figure>
+    <figcaption>{{ musique.name }}:</figcaption>
+    <audio controls src="{{ asset('uploads/songs/' ~ musique.songName) }}"></audio>
+</figure>
+
+{% endif %}
+{% endfor %}
+
+<a href="{{ path('app_musique_new') }}">Create new</a>
+{% endblock %}

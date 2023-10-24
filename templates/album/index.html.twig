@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Album index{% endblock %}
+
+{% block body %}
+<h1>Album index</h1>
+
+<div class="container p-5">
+    <div class="row">
+        {% for album in albums %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ album.name }}
+                        <br><span style="font-size: small;">by {{ album.artist.name }}</span>
+                    </h5>
+                </div>
+                <div class="card-content">
+                    <div><img src="{{ asset('uploads/covers/' ~ album.coverName) }}" alt="" width="100%"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="btns">
+                        <a class="btn btn-primary" href="{{ path('app_album_show', {'id': album.id}) }}">Show</a>
+                        {% if not app.user %}
+                        <a class="btn btn-light" href="{{ path('app_achat', {'id_album': album.id}) }}">Buy</a>
+                        {% endif %}
+                        {% if app.user %}
+                        <a class="btn btn-primary" href="{{ path('app_achat', {'id_album': album.id}) }}">Buy</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-outline-primary"
+                            href="{{ path('app_album_edit', {'id': album.id}) }}">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="no-album">Nothing in here</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="btns p-3">
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn-create-new btn btn-outline-primary" href="{{ path('app_album_new') }}">Create new</a>
+    {% endif %}
+</div>
+{% endblock %}

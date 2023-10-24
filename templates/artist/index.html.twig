@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artist index{% endblock %}
+
+{% block body %}
+<h1>Artist index</h1>
+
+<div class="container p-5">
+    <div class="row">
+        {% for artist in artists %}
+        <div class="col-md-4">
+                <div class="card">
+                <div class="card-header">
+                    <h3>{{ artist.name }}</h3>
+                </div>
+                <div class="card-content">
+                    <div>{{ artist.id }}</div>
+                </div>
+                <div class="card-footer">
+                    <div class="btns">
+                        <a href="{{ path('app_artist_show', {'id': artist.id}) }}"
+                            class="button bg-primary me-1 p-2 text-white rounded border">Show</a>
+                        <a href="{{ path('app_artist_edit', {'id': artist.id}) }}"
+                            class="button bg-light me-1 p-2 text-white rounded border">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <p>No records found</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="btns p-5">
+    <div class="button bg-light me-1 p-2 text-white rounded border w-25 text-center"><a
+            href="{{ path('app_artist_new') }}">Create new</a></div>
+</div>
+{% endblock %}
